@@ -3,6 +3,7 @@
 #include "Helper.h"
 #include "PostfixNotation.h"
 #include "Counting.h"
+#include "Globals.h"
 
 using namespace std;
 
@@ -12,21 +13,21 @@ int main() {
     Counting counting;
 
     while (true) {
-        string expression = helperProgram.input();
+        string expression = Helper::input();
         if (expression == "quit") {
             break;
         }
 
-        vector<string> updatedExpression = tokenization.tokenizeExpression(expression);
+        vector<string> updatedExpression = Tokenization::tokenizeExpression(expression);
 
         cout << "Tokenization: ";
-        helperProgram.output(updatedExpression);
+        Helper::output(updatedExpression);
 
         PostfixNotation notationPost;
-        vector<string> notation = notationPost.notation(updatedExpression);
+        vector<string> notation = PostfixNotation::notation(updatedExpression);
 
         cout << "Postfix Notation: ";
-        helperProgram.output(notation);
+        Helper::output(notation);
 
         string result = counting.countingPostfix(notation);
 

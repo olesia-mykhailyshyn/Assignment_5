@@ -1,15 +1,17 @@
 #include "Globals.h"
 
-std::unordered_map<std::string, double> Globals::variables;
+using namespace std;
 
-void Globals::setVariable(const std::string& name, double value) {
+unordered_map<string, double> Globals::variables;
+
+void Globals::setVariable(const string& name, double value) {
     variables[name] = value;
 }
 
-double Globals::getVariable(const std::string& name) {
+double Globals::getVariable(const string& name) {
     return variables[name];
 }
 
-bool Globals::isVariableDefined(const std::string& name) {
+bool Globals::isVariableDefined(const string& name) {
     return variables.find(name) != variables.end();
 }

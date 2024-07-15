@@ -1,5 +1,6 @@
 #include "Tokenization.h"
 #include "Helper.h"
+#include "Globals.h"
 
 using namespace std;
 
@@ -9,11 +10,18 @@ vector<string> Tokenization::tokenizeExpression(const string& expression) {
     size_t i = 0;
 
     while (i < expression.length()) {
-        if (isdigit(expression[i]) ||
-            (expression[i] == '-' && (i == 0 || !isdigit(expression[i - 1])))) {
+        if (isdigit(expression[i]) || (expression[i] == '-' && (i == 0 || !isdigit(expression[i - 1])))) {
             Helper::processDigitExpression(expression, i, updatedExpression, true);
-        }
-        else if (Helper::elementOperator(string(1, expression[i]))) {
+        } else if (Helper::elementOperator(string(1, expression[i]))) {
+            updatedExpression.emplace_back(1, expression[i]);
+        } else if (isalpha(expression[i])) {
+            string varName(1, expression[i]);
+            while (++i < expression.length() && isalnum(expression[i])) {
+                varName += expression[i];
+            }
+            --i;
+            updatedExpression.push_back(varName);
+        } else if (expression[i] == '=') {
             updatedExpression.emplace_back(1, expression[i]);
         }
         else if ((i + 2 < expression.length()) &&

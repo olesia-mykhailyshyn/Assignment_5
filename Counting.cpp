@@ -1,14 +1,16 @@
 #include "Counting.h"
+#include "Globals.h"
 #include <stack>
 #include <cmath>
 #include <sstream>
-#include <algorithm> // for std::max and std::min
+#include <algorithm>
 
 using namespace std;
 
 string Counting::countingPostfix(const vector<string>& notation) {
     stack<double> stack;
     double result = 0;
+    string lastVarName;
 
     for (const auto& token : notation) {
         double operand;
@@ -16,8 +18,18 @@ string Counting::countingPostfix(const vector<string>& notation) {
 
         if (iss >> operand) {
             stack.push(operand);
-        }
-        else {
+        } else if (Globals::isVariableDefined(token)) {
+            stack.push(Globals::getVariable(token));
+        } else if (token == "=") {
+            // Variable assignment
+            double value = stack.top();
+            stack.pop();
+            Globals::setVariable(lastVarName, value);
+            result = value;
+        } else if (!iss.fail()) {
+            lastVarName = token;
+        } else {
+            // Handle other operators and functions
             double operand2 = stack.top();
             stack.pop();
 
@@ -25,34 +37,27 @@ string Counting::countingPostfix(const vector<string>& notation) {
                 double operand1 = stack.top();
                 stack.pop();
                 result = operand1 + operand2;
-            }
-            else if (token == "-") {
+            } else if (token == "-") {
                 double operand1 = stack.top();
                 stack.pop();
                 result = operand1 - operand2;
-            }
-            else if (token == "*") {
+            } else if (token == "*") {
                 double operand1 = stack.top();
                 stack.pop();
                 result = operand1 * operand2;
-            }
-            else if (token == "/") {
+            } else if (token == "/") {
                 double operand1 = stack.top();
                 stack.pop();
                 result = operand1 / operand2;
-            }
-            else if (token == "^") {
+            } else if (token == "^") {
                 double operand1 = stack.top();
                 stack.pop();
                 result = pow(operand1, operand2);
-            }
-            else if (token == "sin") {
+            } else if (token == "sin") {
                 result = sin(operand2);
-            }
-            else if (token == "cos") {
+            } else if (token == "cos") {
                 result = cos(operand2);
-            }
-            else if (token == "max") {
+            } else if (token == "max") {
                 result = operand2;
                 while (!stack.empty() && stack.top() <= operand2) {
                     stack.pop();
@@ -62,8 +67,7 @@ string Counting::countingPostfix(const vector<string>& notation) {
                     stack.pop();
                 }
                 stack.push(result);
-            }
-            else if (token == "min") {
+            } else if (token == "min") {
                 result = operand2;
                 while (!stack.empty() && stack.top() >= operand2) {
                     stack.pop();
@@ -73,11 +77,10 @@ string Counting::countingPostfix(const vector<string>& notation) {
                     stack.pop();
                 }
                 stack.push(result);
-            }
-            else if (token == "abs") {
+            } else if (token == "abs") {
                 result = abs(operand2);
             }
-                stack.push(result);
+            stack.push(result);
         }
     }
 

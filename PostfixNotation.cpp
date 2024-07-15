@@ -12,37 +12,29 @@ vector<string> PostfixNotation::notation(const vector<string>& tokens) {
     Helper helperPostfix;
 
     for (const auto& token : tokens) {
-        if (!Helper::elementOperator(token)) {  // check if it's a number or variable
+        if (!Helper::elementOperator(token) && token != "=") {  // check if it's a number or variable
             queue.push(token);
-        }
-
-        if (Helper::elementOperator(token) && token != "(" && token != ")") {
-            while (!operatorTokens.empty() &&
-                   Helper::getPrecedence(operatorTokens.top()) >= Helper::getPrecedence(token)) {
+        } else if (Helper::elementOperator(token) && token != "(" && token != ")") {
+            while (!operatorTokens.empty() && Helper::getPrecedence(operatorTokens.top()) >= Helper::getPrecedence(token)) {
                 string op = operatorTokens.top();
                 operatorTokens.pop();
                 queue.push(op);
             }
             operatorTokens.push(token);
-        }
-
-        if (token == "(") {
+        } else if (token == "(") {
             operatorTokens.emplace("(");
-        }
-
-        if (token == ")") {
+        } else if (token == ")") {
             while (operatorTokens.top() != "(") {
                 std::string op = operatorTokens.top();
                 operatorTokens.pop();
                 queue.push(op);
             }
             operatorTokens.pop();  // pop the '('
-        }
-
-        if (token == "=") {
-            string varName = queue.front();
+        } else if (token == "=") {
+            string varName = queue.back(); // Get the variable name from the back of the queue
             queue.pop();
-            queue.push(varName);
+            returnList.push_back(varName);
+            operatorTokens.push(token); // Push the assignment operator to the stack
         }
     }
 
