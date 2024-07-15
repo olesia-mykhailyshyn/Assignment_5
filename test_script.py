@@ -69,7 +69,7 @@ def test_echo():
         # {"input": "def div(a, b) {a / b}\ndiv(10, 2)\n", "expected_output": "5.000000"},
         # {"input": "def complex(a, b) {sin(a) + cos(b)}\ncomplex(0, 0)\n", "expected_output": "1.000000"},
         # # Variable saving and reusing
-        # {"input": "var a = pow(2, 4)\na + 3\n", "expected_output": "19.000000"},
+        {"input": "var a = pow(2, 4)\na + 3\n", "expected_output": "19.000000"},
         # {"input": "var a = max(min(3 * 2, 2), 2)\na + 3\n", "expected_output": "5.000000"},
         # # Extra points examples
         # {"input": "var a = max(min(3 * 2, 2), 2)\na + 3\n5\n", "expected_output": "5.000000"},

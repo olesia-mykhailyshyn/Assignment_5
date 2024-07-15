@@ -1,14 +1,11 @@
-#ifndef COUNTING_H
-#define COUNTING_H
-
+#pragma once
 #include <string>
 #include <vector>
-
-using namespace std;
+#include <stack>
 
 class Counting {
 public:
-    static string countingPostfix(const vector<string>& notation) ;
+    std::string countingPostfix(const std::vector<std::string>& notation);
+private:
+    void handleFunctions(const std::string& token, std::stack<double>& stack, double& result);
 };
-
-#endif

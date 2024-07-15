@@ -12,7 +12,7 @@ vector<string> PostfixNotation::notation(const vector<string>& tokens) {
     Helper helperPostfix;
 
     for (const auto& token : tokens) {
-        if (!Helper::elementOperator(token)) {  // check if it's a number
+        if (!Helper::elementOperator(token)) {  // check if it's a number or variable
             queue.push(token);
         }
 
@@ -37,6 +37,12 @@ vector<string> PostfixNotation::notation(const vector<string>& tokens) {
                 queue.push(op);
             }
             operatorTokens.pop();  // pop the '('
+        }
+
+        if (token == "=") {
+            string varName = queue.front();
+            queue.pop();
+            queue.push(varName);
         }
     }
 
