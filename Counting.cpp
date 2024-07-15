@@ -53,20 +53,31 @@ string Counting::countingPostfix(const vector<string>& notation) {
                 result = cos(operand2);
             }
             else if (token == "max") {
-                double operand1 = stack.top();
-                stack.pop();
-                result = max(operand1, operand2);
+                result = operand2;
+                while (!stack.empty() && stack.top() <= operand2) {
+                    stack.pop();
+                }
+                if (!stack.empty()) {
+                    result = max(stack.top(), operand2);
+                    stack.pop();
+                }
+                stack.push(result);
             }
             else if (token == "min") {
-                double operand1 = stack.top();
-                stack.pop();
-                result = min(operand1, operand2);
+                result = operand2;
+                while (!stack.empty() && stack.top() >= operand2) {
+                    stack.pop();
+                }
+                if (!stack.empty()) {
+                    result = min(stack.top(), operand2);
+                    stack.pop();
+                }
+                stack.push(result);
             }
             else if (token == "abs") {
                 result = abs(operand2);
             }
-
-            stack.push(result);
+                stack.push(result);
         }
     }
 
