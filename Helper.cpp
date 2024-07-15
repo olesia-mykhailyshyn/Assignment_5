@@ -13,7 +13,10 @@ const map<string, int> Helper::MyDictionary = {
         {"^", 3},
         {"(", 0},
         {"sin", 4},
-        {"cos", 4}
+        {"cos", 4},
+        {"max", 4},
+        {"min", 4},
+        {"abs", 4}
 };
 
 string Helper::input() {
@@ -49,7 +52,7 @@ string Helper::processDigitExpression(const string& expression, size_t& i, vecto
 
 bool Helper::elementOperator(const std::string& element) {
     const unordered_map<string, int> operators = {
-            {"(", 0}, {")", 0}, {"+", 1}, {"-", 1}, {"/", 2}, {"*", 2}, {"^", 3}, {"sin", 4}, {"cos", 4}
+            {"(", 0}, {")", 0}, {"+", 1}, {"-", 1}, {"/", 2}, {"*", 2}, {"^", 3}, {"sin", 4}, {"cos", 4}, {"max", 4}, {"min", 4}, {"abs", 4}
     };
     return operators.find(element) != operators.end();
 }

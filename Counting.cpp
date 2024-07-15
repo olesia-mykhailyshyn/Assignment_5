@@ -2,6 +2,7 @@
 #include <stack>
 #include <cmath>
 #include <sstream>
+#include <algorithm> // for std::max and std::min
 
 using namespace std;
 
@@ -41,14 +42,28 @@ string Counting::countingPostfix(const vector<string>& notation) {
                 result = operand1 / operand2;
             }
             else if (token == "^") {
-                result = pow(stack.top(), operand2);
+                double operand1 = stack.top();
                 stack.pop();
+                result = pow(operand1, operand2);
             }
             else if (token == "sin") {
                 result = sin(operand2);
             }
             else if (token == "cos") {
                 result = cos(operand2);
+            }
+            else if (token == "max") {
+                double operand1 = stack.top();
+                stack.pop();
+                result = max(operand1, operand2);
+            }
+            else if (token == "min") {
+                double operand1 = stack.top();
+                stack.pop();
+                result = min(operand1, operand2);
+            }
+            else if (token == "abs") {
+                result = abs(operand2);
             }
 
             stack.push(result);

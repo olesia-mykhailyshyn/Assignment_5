@@ -18,7 +18,10 @@ vector<string> Tokenization::tokenizeExpression(const string& expression) {
         }
         else if ((i + 2 < expression.length()) &&
                  ((expression[i] == 's' && expression[i + 1] == 'i' && expression[i + 2] == 'n') ||
-                  (expression[i] == 'c' && expression[i + 1] == 'o' && expression[i + 2] == 's'))) {
+                  (expression[i] == 'c' && expression[i + 1] == 'o' && expression[i + 2] == 's') ||
+                  (expression[i] == 'm' && expression[i + 1] == 'a' && expression[i + 2] == 'x') ||
+                  (expression[i] == 'm' && expression[i + 1] == 'i' && expression[i + 2] == 'n') ||
+                  (expression[i] == 'a' && expression[i + 1] == 'b' && expression[i + 2] == 's'))) {
             string func = expression.substr(i, 3);
             updatedExpression.push_back(func);
             i += 2;
