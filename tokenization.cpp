@@ -21,7 +21,7 @@ vector<string> Tokenization::tokenizeExpression(const string& expression) {
                   (expression[i] == 'c' && expression[i + 1] == 'o' && expression[i + 2] == 's'))) {
             string func = expression.substr(i, 3);
             updatedExpression.push_back(func);
-            i += 2; 
+            i += 2;
         }
         ++i;
     }
